@@ -12,6 +12,7 @@ DIR=array	\
     rhs		\
     ht		\
     pflock	\
+    popcount	\
     pr		\
     queue	\
     ring	\
@@ -69,6 +70,7 @@ all:
 	$(MAKE) -C ./ck_pflock/benchmark all
 	$(MAKE) -C ./ck_hp/validate all
 	$(MAKE) -C ./ck_hp/benchmark all
+	$(MAKE) -C ./ck_popcount/validate all
 
 clean:
 	$(MAKE) -C ./ck_array/validate clean
@@ -116,6 +118,7 @@ clean:
 	$(MAKE) -C ./ck_pflock/benchmark clean
 	$(MAKE) -C ./ck_hp/validate clean
 	$(MAKE) -C ./ck_hp/benchmark clean
+	$(MAKE) -C ./ck_popcount/validate clean
 
 check: all
 	rc=0; 							\
