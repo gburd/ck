@@ -134,4 +134,11 @@ ck_cc_popcount(unsigned int x)
 	return __builtin_popcount(x);
 }
 
+CK_CC_INLINE static int
+ck_cc_popcount(unsigned long long x)
+{
+
+	return __builtin_popcountll(x);
+}
+
 #endif /* _CK_GCC_CC_H */

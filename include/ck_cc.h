@@ -143,13 +143,32 @@ ck_cc_ctz(unsigned int x)
 CK_CC_INLINE static int
 ck_cc_popcount(unsigned int x)
 {
-	unsigned int acc;
+	unsigned int acc = x;
 
-	for (acc = 0; x != 0; x >>= 1)
-		acc += x & 1;
+	acc = (acc & 0x55555555) + (acc >> 1 & 0x55555555);
+	acc = (acc & 0x33333333) + (acc >> 2 & 0x33333333);
+	acc = acc + (acc >> 4)  & 0x0F0F0F0F;
+	acc = acc + (acc >> 8)  & 0x00FF00FF;
+	acc = acc + (acc >> 16) & 0x0000FFFF;
 
 	return acc;
 }
+
+CK_CC_INLINE static int
+ck_cc_popcountll(unsigned long long x)
+{
+	unsigned long long acc;
+
+	acc = v - ((v >> 1) & 0x5555555555555555ull);
+	acc =     ((acc >> 2) & 0x3333333333333333ull) + (acc & 0x3333333333333333ull);
+	acc =     ((acc >> 4)  + acc) & 0x0F0F0F0F0F0F0F0Full;
+	acc =     ((acc >> 8)  + acc) & 0x00FF00FF00FF00FFull;
+	acc =     ((acc >> 16) + acc) & 0x0000FFFF0000FFFFull;
+	acc =     ((acc >> 32) + acc) & 0x00000000FFFFFFFFull;
+
+	return (int)acc;
+}
+
 #endif
 
 #endif /* _CK_CC_H */
